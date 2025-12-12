@@ -81,10 +81,7 @@ sudo apt update && sudo apt upgrade
 ```
 This automatically refreshes your trust store
 3. The tool update-ca-certifictes builds the final list
-    + Each time the package updates, it runs:
-        ```bash
-        update-ca-certificates
-        ```
+    + Each time the package updates, it runs: `update-ca-certificates`
     + This tool:
         * Reads the config file /etc/ca-certificates.conf
         * Takes certifif=cates enabled in that file
