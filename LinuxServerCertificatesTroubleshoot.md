@@ -67,30 +67,30 @@ openssl x509 -in google.crt -text -noout
 
 
 1. When you install Ubuntu/WSL -> the ca-certificates package is installed
-+This package includes
-*/usr/share/ca-certificates (official CA files)
-*The configuration /etc/ca-certificates.conf
-*the tool `update-ca-certificates`
++ This package includes
+* /usr/share/ca-certificates (official CA files)
+* The configuration /etc/ca-certificates.conf
+* the tool `update-ca-certificates`
 2.Ubuntu updates your CA list through normal system updates
-+Whenever there is a trusted CA added/removed by Mozilla or Ubuntu security teams
-*Ubuntu releases a new ca-certificates package version
-*you get it when you run
++ Whenever there is a trusted CA added/removed by Mozilla or Ubuntu security teams
+* Ubuntu releases a new ca-certificates package version
+* you get it when you run
 
 ```bash
 sudo apt update && sudo apt upgrade
 ```
 This automatically refreshes your trust store
 3.The tool update-ca-certifictes builds the final list
-+Each time the package updates, it runs
++ Each time the package updates, it runs
 ```bash
 update-ca-certificates
 ```
-+This tool:
-*Reads the config file /etc/ca-certificates.conf
-*Takes certifif=cates enabled in that file
-*Copies them into /etc/ssl/certs/
-*Generates hashed links
-*Builds the big trust bundle: **/etc/ssl/certs/ca-certificates.crt**
++ This tool:
+* Reads the config file /etc/ca-certificates.conf
+* Takes certifif=cates enabled in that file
+* Copies them into /etc/ssl/certs/
+* Generates hashed links
+* Builds the big trust bundle: **/etc/ssl/certs/ca-certificates.crt**
 Thats the bundle your apps use.
 
 SUMMARY:
@@ -154,4 +154,27 @@ certificates can also be enabled or disabled using #-comment or not commenting i
 Just copy the file.crt to /usr/local/share/ca-certificates/ and then run
 ```bash
 sudo update-ca-certificates 
+```
+
+## How to verify the certificate i have with certificate store in ubuntu?
+
+Get the server or intermediate certificate.
+
+Copy only the base64 encoded data, from ---begin certificate--- to ---end certificate---
+
+run the below command:
+```bash
+openssl verify -CAfile /ect/ssl/certs/ca-certificates.crt my_example_cert.pem
+```
+output might be success
+```
+my_example_cert.pem: Ok
+```
+or errors like
+```
++ unable to verify first certificate
++ self-signed certificate in certificate chain
++ hostname mismatch
++ certificate has expired
++ unable to get issuer certificate
 ```

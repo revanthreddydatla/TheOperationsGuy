@@ -1,4 +1,5 @@
 ## How does github authenticates using ssh key?
+
 You generate a ssh key
 ```bash
 ssh-keygen -t ed25519 -C "email@example.com" 
@@ -12,7 +13,9 @@ but here is the thing
 You configured remote as origin with `git@github.com:revanthreddydatla/TheOperationsGuy.git` here
 
 **username** is git  
+
 **host** is github.com
+
 **repo address** is revanthreddydatla/TheOperationsGuy.git
 
 git doesnot use revanthreddydatla to find account.
