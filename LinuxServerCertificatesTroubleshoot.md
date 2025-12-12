@@ -75,11 +75,10 @@ openssl x509 -in google.crt -text -noout
     + Whenever there is a trusted CA added/removed by Mozilla or Ubuntu security teams
         * Ubuntu releases a new ca-certificates package version
         * you get it when you run
-
-```bash
-sudo apt update && sudo apt upgrade
-```
-This automatically refreshes your trust store
+            ```bash
+            sudo apt update && sudo apt upgrade
+            ```
+        * This automatically refreshes your trust store
 3. The tool update-ca-certifictes builds the final list
     + Each time the package updates, it runs: `update-ca-certificates`
     + This tool:
