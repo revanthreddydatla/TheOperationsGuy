@@ -67,30 +67,30 @@ openssl x509 -in google.crt -text -noout
 
 
 1. When you install Ubuntu/WSL -> the ca-certificates package is installed
-+ This package includes
-....* /usr/share/ca-certificates (official CA files)
-....* The configuration /etc/ca-certificates.conf
-....* the tool `update-ca-certificates`
-2.Ubuntu updates your CA list through normal system updates
-+ Whenever there is a trusted CA added/removed by Mozilla or Ubuntu security teams
-....* Ubuntu releases a new ca-certificates package version
-....* you get it when you run
+    + This package includes
+        * /usr/share/ca-certificates (official CA files)
+        * The configuration /etc/ca-certificates.conf
+        * the tool `update-ca-certificates`
+2. Ubuntu updates your CA list through normal system updates
+    + Whenever there is a trusted CA added/removed by Mozilla or Ubuntu security teams
+        * Ubuntu releases a new ca-certificates package version
+        * you get it when you run
 
 ```bash
 sudo apt update && sudo apt upgrade
 ```
 This automatically refreshes your trust store
-3.The tool update-ca-certifictes builds the final list
-+ Each time the package updates, it runs
-```bash
-update-ca-certificates
-```
-+ This tool:
-....* Reads the config file /etc/ca-certificates.conf
-....* Takes certifif=cates enabled in that file
-....* Copies them into /etc/ssl/certs/
-....* Generates hashed links
-....* Builds the big trust bundle: **/etc/ssl/certs/ca-certificates.crt**
+3. The tool update-ca-certifictes builds the final list
+    + Each time the package updates, it runs:
+        ```bash
+        update-ca-certificates
+        ```
+    + This tool:
+        * Reads the config file /etc/ca-certificates.conf
+        * Takes certifif=cates enabled in that file
+        * Copies them into /etc/ssl/certs/
+        * Generates hashed links
+        * Builds the big trust bundle: **/etc/ssl/certs/ca-certificates.crt**
 Thats the bundle your apps use.
 
 SUMMARY:
