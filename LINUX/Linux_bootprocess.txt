@@ -1,0 +1,46 @@
+Linux Boot Process (From Pressing PowerButton to OS(kernel) taking control)
+
+PowerButton Pressed (H/W)
+        |
+        |
+        | (motherboard activated)
+        | (motherboard signals SMPS)
+        | (SMPS sends stable power to CPU, RAM, BIOS/UEFI ROM chip, Storage Controllers) (H/W)
+        |
+        |
+        |
+        CPU
+        |
+        | 
+        | 1.(CPU resets)
+        | 2.(CPU starts reading from its hard wired address location)
+        |
+        | (address location points to BIOS/UEFI storage which has BIOS/UEFI program or instructions)
+        | (HINT: BIOS(legacy) /UEFI(modern) is a 
+        | program stored in non volatile flash ROM chip on motherboard) (H/W)
+        |
+        | 3.(CPU executes BIOS/UEFI program)
+        | 4.(IF BIOS ->  runs POST program, loads MBR (residing in disk) into RAM and then loads GRUB to RAM and runs GRUB)
+        | or.(IF UEFI -> runs POST program, mounts EFI System partion (residing in disk) which has GRUB and runs GRUB)
+        |    (So BIOS/UEFI finishes its job and steps aside permanently, GRUB takes control of CPU)
+        |    (MBR is structure in disk, ESP(EFI system partion) is a partition in disk)
+        |    (Remember: Only one program owns the CPU at a time)
+        |    (In next steps, CPU time changes from GRUB -> KERNEL)
+        |    (So GRUB dies the moment it jumps to kernel) 
+        |
+        | 5.(GRUB -> loads kernel, initramfs(which are residing in disk) onto RAM )
+        |   (initramfs is a compressed filesystem image)
+        |   (GRUB jumps onto kernels entry point)
+        |
+        | 6.(kernel mounts initramfs as root filesystem)
+        | 7.(kernel runs /init program)
+        |   (will kernel die after it starting init program, the answer is NO)
+        |   (init runs in user mode)
+        |   (kernel runs in kernel mode)
+        |   (CPU switches between them) 
+        |   (This is the first time multitasking begins)
+        |   (Kernel mode <-> user mode, switches are harware-enforced transitions triggered only by system calls, interrupts and exeptions)
+        |   (Kernel mode <-> user mode switching happens thousands of times during one cat command)
+        |   (Ex: cat notes.txt,cat is user mode program, calls read(fd, buf, size), sys call, kernel mode)
+        |   (usermode ring 3 on CPU, where as kernal mode ring 0, so any user program initialing h/w operation involves a sys call, sys call requires switching)
+        | 8.(once init is running, os is operational)
